@@ -29,6 +29,7 @@ from . import metrics
 from . import geometry
 from . import baseline
 from . import ingest
+from . import live
 
 __version__ = "0.1.0"
 
@@ -40,5 +41,5 @@ __all__ = [
     "Sonifier", "StreamingSonifier", "SonifyResult", "sonify",
     "RealtimeSonifier", "chunk_sample",
     "write_wav", "read_wav", "simulate", "sources",
-    "metrics", "geometry", "baseline", "ingest", "__version__",
+    "metrics", "geometry", "baseline", "ingest", "live", "__version__",
 ]

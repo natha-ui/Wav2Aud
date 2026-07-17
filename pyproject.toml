@@ -1,26 +1,58 @@
 [build-system]
-requires = ["setuptools>=64", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "wave2aud"
 version = "0.1.0"
-description = "Biomimetic sonification of radar, radio, infrared, ultrasound, gamma and seismic waves into semi-musical audio."
+description = "Biomimetic real-time sonification of radar, radio, infrared, ultrasound, gamma, seismic and audio waves into semi-musical sound."
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
-    { name = "The Wave2Aud collective (biophysics, engineering, mathematics, biology)" },
+    { name = "the wave2aud authors" },
 ]
-keywords = ["sonification", "biomimetic", "cochlea", "auditory-model", "radar", "seismic", "ultrasound", "gamma", "audio", "robotics", "ros2"]
+keywords = [
+    "sonification", "biomimetic", "cochlea", "auditory-model", "real-time",
+    "dsp", "radar", "seismic", "ultrasound", "gamma", "audio", "robotics", "ros2",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
 dependencies = [
     "numpy>=1.21",
     "scipy>=1.7",
 ]
 
 [project.optional-dependencies]
+# Live audio output for real-time conversion (needs PortAudio via sounddevice).
+realtime = ["sounddevice>=0.4"]
+# Figure rendering (pipeline plots, geometry, metrics).
 viz = ["matplotlib>=3.4"]
-dev = ["pytest>=7.0", "matplotlib>=3.4"]
+# Everything a user might want.
+all = ["sounddevice>=0.4", "matplotlib>=3.4"]
+# Contributor tooling.
+dev = ["pytest>=7.0", "matplotlib>=3.4", "sounddevice>=0.4", "build>=1.0"]
+
+[project.urls]
+Homepage = "https://github.com/natha-ui/Wav2Aud"
+Repository = "https://github.com/natha-ui/Wav2Aud"
+Documentation = "https://github.com/natha-ui/Wav2Aud/blob/main/docs/DESIGN.md"
+"Live demo" = "https://natha-ui.github.io/Wav2Aud/"
+Issues = "https://github.com/natha-ui/Wav2Aud/issues"
 
 [project.scripts]
 wave2aud = "wave2aud.cli:main"

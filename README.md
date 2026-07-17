@@ -22,7 +22,7 @@ raw wave ─▶ physical coupling ─▶ cochlea + hair cells ─▶ perceptual 
         ─▶ per-category music mapping ─▶ note-bank synthesis + effects ─▶ audio
 ```
 
-![The wave → audio pipeline](assets/pipeline_radar.png)
+![The wave → audio pipeline](https://raw.githubusercontent.com/natha-ui/Wav2Aud/main/assets/pipeline_radar.png)
 
 > A perceptual instrument, not a calibrated measurement tool — use it to notice,
 > compare and triage, then confirm with quantitative analysis.
@@ -30,7 +30,49 @@ raw wave ─▶ physical coupling ─▶ cochlea + hair cells ─▶ perceptual 
 ## Install
 
 ```bash
-pip install -e ".[viz]"     # runtime deps: numpy, scipy (+ matplotlib for figures)
+pip install wave2aud                # core: numpy + scipy only
+pip install "wave2aud[realtime]"    # + live audio output (sounddevice/PortAudio)
+pip install "wave2aud[all]"         # + matplotlib for figures
+```
+
+<details>
+<summary>From source</summary>
+
+```bash
+git clone https://github.com/natha-ui/Wav2Aud.git && cd Wav2Aud
+pip install -e ".[dev]"
+pytest -q
+```
+</details>
+
+## Real-time conversion
+
+Stream any sensor straight to your speakers — the engine keeps the cochlea,
+hair cells and oscillator phases continuous across blocks, so the audio is
+seamless:
+
+```bash
+wave2aud live --type radar               # simulated sensor → speakers, Ctrl+C to stop
+wave2aud live --type seismic --natural   # hear the raw wave instead of the music
+wave2aud live --list-devices
+```
+
+```python
+from wave2aud import live
+from wave2aud.sources import CallbackSource
+
+# any driver that returns arrays plugs straight in
+src = CallbackSource("radar", lambda: sdr.read_samples(4096),
+                     sample_rate=2.4e6, carrier=10.5e9)
+live.stream(src)                      # blocks, converting in real time
+```
+
+Or drive the engine yourself and do what you like with the blocks:
+
+```python
+from wave2aud import RealtimeSonifier
+engine = RealtimeSonifier()
+block = engine.process(chunk)         # → seamless (n, 2) stereo, phase-continuous
 ```
 
 ## Two-minute demo
@@ -85,7 +127,7 @@ seismic → audio → radio → infrared → radar → gamma → ultrasound
 `audio` (ordinary sound) is a full category, and any wave can be heard
 **naturally** (the raw wave in the audible range) or as the **musical** version.
 
-![Category tone similarity](assets/category_similarity.png)
+![Category tone similarity](https://raw.githubusercontent.com/natha-ui/Wav2Aud/main/assets/category_similarity.png)
 
 | Wave | Archetype | Signature |
 |------|-----------|-----------|
@@ -108,7 +150,8 @@ seismic → audio → radio → infrared → radar → gamma → ultrasound
   duration, stereo/3-D, reverb, vibrato, tremolo, envelope, noise, brightness,
   distortion, panning motion — `mapping.py`, `synthesis.py`.
 - **Stateful real-time engine** (complex-gammatone cochlea, phase-continuous
-  note bank, Schroeder reverb) — `realtime.py`.
+  note bank, Schroeder reverb) — `realtime.py`, with live speaker output in
+  `live.py`.
 - **Quantitative & geometric analysis**: wave↔audio measures, an ear-vs-FFT
   interpretability comparison, and birdsong-style delay-embedding geometry —
   `metrics.py`, `geometry.py`, `baseline.py`.
@@ -121,7 +164,7 @@ seismic → audio → radio → infrared → radar → gamma → ultrasound
 wave2aud/        the Python package (pure NumPy/SciPy)
   transduction · cochlea · haircell · ear     the biomimetic ear
   features · mapping · synthesis              perception → music
-  realtime · pipeline · sources · ros/        streaming, I/O, robotics
+  realtime · live · pipeline · sources · ros/ real-time, I/O, robotics
   metrics · geometry · baseline · viz         analysis & visualisation
   simulate · ingest                           synthetic sources, bring-your-own
 tests/           pytest suite

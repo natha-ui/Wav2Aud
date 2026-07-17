@@ -311,6 +311,25 @@ High-rate continuous streams (radar, radio, ultrasound) are seamless block-to-
 block; gamma is processed as one block (it is event-based, not a stream). The
 ROS 2 `WaveBridge` uses this engine, so a robot's live feed sonifies continuously.
 
+**Live output.** `wave2aud.live` turns the engine into an actual instrument:
+chunks are pulled from any `WaveSource`, sonified and written to an audio
+device. Output needs the optional `sounddevice` extra
+(`pip install "wave2aud[realtime]"`); `live.available()` reports whether it is
+usable and the import is deferred, so the package works fine without it.
+
+```bash
+wave2aud live --type radar               # sensor -> speakers (Ctrl+C to stop)
+wave2aud live --type seismic --natural   # the raw wave instead of the music
+```
+
+```python
+from wave2aud import live
+live.stream(CallbackSource("radar", sdr.read_samples, sample_rate=2.4e6))
+```
+
+`mode="natural"` plays the coupled drive (exposed as `engine.last_drive`) rather
+than the sonification — the same natural/musical choice the web studio offers.
+
 ## 10. Interpretability: biomimetic ear vs FFT
 
 The naive baseline (`wave2aud.baseline.fft_sonify`) does the "typical" thing —

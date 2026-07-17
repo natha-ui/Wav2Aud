@@ -1,0 +1,94 @@
+# Build and publish the package to PyPI when a GitHub Release is published.
+#
+# Uses PyPI "Trusted Publishing" (OpenID Connect), so there is no API token to
+# create or store. One-time setup on PyPI:
+#
+#   1. https://pypi.org/manage/account/publishing/  ->  "Add a new pending publisher"
+#        PyPI project name : wave2aud
+#        Owner             : natha-ui
+#        Repository name   : Wav2Aud
+#        Workflow name     : publish.yml
+#        Environment name  : pypi
+#   2. In this repo: Settings -> Environments -> create an environment named "pypi".
+#   3. Cut a release (Releases -> Draft a new release -> tag e.g. v0.1.0 -> Publish).
+#
+# Test it against TestPyPI first by running this workflow manually with
+# `target: testpypi` (Actions -> Publish to PyPI -> Run workflow).
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Where to publish"
+        required: true
+        default: testpypi
+        type: choice
+        options: [testpypi, pypi]
+
+jobs:
+  build:
+    name: Build distributions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build the sdist and wheel
+        run: |
+          python -m pip install --upgrade build
+          python -m build
+
+      - name: Validate the package metadata
+        run: |
+          python -m pip install --upgrade twine
+          twine check dist/*
+
+      - name: Upload the distributions as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: build
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'testpypi'
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/wave2aud
+    permissions:
+      id-token: write        # required for Trusted Publishing
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.target == 'pypi')
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/wave2aud
+    permissions:
+      id-token: write        # required for Trusted Publishing
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

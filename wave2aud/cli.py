@@ -37,6 +37,29 @@ def _cmd_sonify(args):
         print(f"wrote {args.figure}")
 
 
+def _cmd_live(args):
+    """Real-time conversion: stream a (simulated or real) sensor to the speakers."""
+    from . import live
+    from .sources import SimulatedSource
+
+    if args.list_devices:
+        print(live.list_devices())
+        return
+    if not live.available():
+        raise SystemExit(
+            'live audio needs the optional dependency: pip install "wave2aud[realtime]"'
+        )
+    source = SimulatedSource(args.type)
+    mode = "natural" if args.natural else "musical"
+    print(f"streaming {args.type} ({mode}) - Ctrl+C to stop")
+    try:
+        n = live.stream(source, fs=args.fs, mode=mode, device=args.device,
+                        n_chunks=args.chunks)
+        print(f"played {n} chunks")
+    except KeyboardInterrupt:
+        print("\nstopped")
+
+
 def _cmd_experience(args):
     from . import ingest
     if not args.input:
@@ -79,6 +102,17 @@ def main(argv=None):
     p.add_argument("--figure", help="also write a pipeline figure to this path")
     p.add_argument("--fs", type=float, default=44100.0)
     p.set_defaults(func=_cmd_sonify)
+
+    p = sub.add_parser("live", help="real-time: stream a sensor to your speakers")
+    p.add_argument("--type", default="radar",
+                   choices=["radar", "radio", "infrared", "ultrasound", "gamma", "seismic", "audio"],
+                   help="wave category to stream")
+    p.add_argument("--chunks", type=int, default=None, help="stop after N chunks (default: run until Ctrl+C)")
+    p.add_argument("--natural", action="store_true", help="play the raw wave instead of the music")
+    p.add_argument("--device", default=None, help="audio output device (index or name)")
+    p.add_argument("--list-devices", action="store_true", help="list audio output devices and exit")
+    p.add_argument("--fs", type=float, default=44100.0)
+    p.set_defaults(func=_cmd_live)
 
     p = sub.add_parser("experience", help="3-D visual + audio from your own .wav or waveform image")
     p.add_argument("--type", required=True,

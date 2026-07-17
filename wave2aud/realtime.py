@@ -278,6 +278,7 @@ class RealtimeSonifier:
         self._params = None
         self._category = None
         self.last_features = None
+        self.last_drive = None
 
     def _couple_continuous(self, chunk: WaveSample):
         """Overlap-save coupling so per-block resampling joins seamlessly."""
@@ -303,6 +304,7 @@ class RealtimeSonifier:
             self._category = chunk.wave_type
         drive = (self.frontend.couple(chunk) if chunk.wave_type == "gamma"
                  else self._couple_continuous(chunk))
+        self.last_drive = drive.signal      # the wave itself, audible ("natural")
 
         activity = self.hair.process(np.abs(self.cochlea.process(drive.signal)))
         feats = _quick_features(activity, self.cochlea.cf, drive.aux, self.fs)
