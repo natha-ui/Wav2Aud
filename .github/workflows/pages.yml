@@ -32,6 +32,11 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on (and set its source to Actions) via the API if it
+          # hasn't been enabled in Settings -> Pages yet, so the first run of
+          # this workflow succeeds without any manual setup.
+          enablement: true
 
       - name: Upload the site/ folder as the Pages artifact
         uses: actions/upload-pages-artifact@v3
