@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>wave2aud — turn any wave into music</title>
+<title>Wav2Aud — turn any wave into music</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   :root {
@@ -172,7 +172,7 @@
 </style>
 
 <div class="topbar"><div class="wrap row">
-  <div class="brand"><span class="dot"></span> wave2aud</div>
+  <div class="brand"><span class="dot"></span> Wav2Aud</div>
   <nav>
     <a href="#studio">Studio</a><a href="#how">How it works</a><a href="#voices">Voices</a>
     <a href="#ab">Ear vs FFT</a><a href="#code">The code</a>
@@ -300,7 +300,7 @@
 
 <section id="code"><div class="wrap">
   <div class="sec-head"><div class="eyebrow">Under the hood</div><h2>The code, two ways.</h2>
-    <p>wave2aud is a Python package (NumPy / SciPy) with a full offline pipeline, a stateful real-time engine and
+    <p>Wav2Aud is a Python package (NumPy / SciPy) with a full offline pipeline, a stateful real-time engine and
       ROS 2 nodes. This page ports the core to the browser so you can try it with no install.</p></div>
   <div class="cols">
     <div class="card">
@@ -313,7 +313,7 @@
         <li><b>metrics.py / geometry.py</b> — wave↔audio measures + birdsong-style geometry.</li>
         <li><b>ingest.py / ros/</b> — bring-your-own-waveform + ROS 2 perception nodes.</li>
       </ul>
-      <pre>import wave2aud as w2a
+      <pre>import wav2aud as w2a
 w2a.sonify(w2a.simulate.preset("radar_car")).write("out.wav")</pre>
     </div>
     <div class="card">
@@ -344,18 +344,18 @@ w2a.sonify(w2a.simulate.preset("radar_car")).write("out.wav")</pre>
       <div class="flow">
         <div class="node">sensor driver → <span>~/wave</span> · <span>~/wave_meta</span></div>
         <div class="lbl">Float32MultiArray + JSON side-channels ↓</div>
-        <div class="node">node <span>wave2aud_sonifier</span> (stateful engine)</div>
+        <div class="node">node <span>wav2aud_sonifier</span> (stateful engine)</div>
         <div class="lbl">↓ publishes</div>
         <div class="node"><span>~/audio</span> → playback &nbsp;·&nbsp; <span>~/features</span> → behaviour node</div>
       </div>
-      <pre>ros2 run wave2aud sonifier \
+      <pre>ros2 run wav2aud sonifier \
   --ros-args -p wave_type:=radar</pre>
     </div>
   </div>
 </div></section>
 
 <footer><div class="wrap">
-  <div class="brand" style="margin-bottom:10px"><span class="dot"></span> wave2aud</div>
+  <div class="brand" style="margin-bottom:10px"><span class="dot"></span> Wav2Aud</div>
   <p class="note2">A perceptual instrument, not a calibrated measurement tool — use it to notice, compare and triage,
     then confirm with quantitative analysis. Studio audio is synthesised live in your browser; the voice/comparison
     clips are rendered by the Python package. MIT licensed.</p>
@@ -727,7 +727,7 @@ function setupResult(res, wt){
 function pickBuffer(res){ return playMode==="natural"? res.naturalBuffer : res.buffer; }
 
 // download / reset / sweep / slider
-$("#dlBtn").addEventListener("click",()=>{ if(!curBuffer) return; const blob=bufferToWavBlob(curBuffer); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="wave2aud_"+selType+".wav"; a.click(); });
+$("#dlBtn").addEventListener("click",()=>{ if(!curBuffer) return; const blob=bufferToWavBlob(curBuffer); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="wav2aud_"+selType+".wav"; a.click(); });
 $("#resetBtn").addEventListener("click",()=>{ stopPlayback(); $("#result").classList.remove("show"); $("#scale").value=0; document.getElementById("studio").scrollIntoView({behavior:"smooth"}); });
 const scale=$("#scale"); let scaleTimer=null;
 scale.addEventListener("input",()=>{ clearTimeout(scaleTimer); scaleTimer=setTimeout(()=>{ if(currentInput) resonify(scale.value/100); }, 130); });

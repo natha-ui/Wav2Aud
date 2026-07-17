@@ -1,22 +1,22 @@
 """Real-time conversion: stream a sensor straight to the speakers.
 
-This is the thin layer that turns :class:`~wave2aud.realtime.RealtimeSonifier`
+This is the thin layer that turns :class:`~wav2aud.realtime.RealtimeSonifier`
 (which converts wave chunks into seamless audio blocks) into an actual live
-instrument: chunks are pulled from any :class:`~wave2aud.sources.WaveSource`,
+instrument: chunks are pulled from any :class:`~wav2aud.sources.WaveSource`,
 sonified, and written to an audio output device.
 
 Audio output needs the optional ``sounddevice`` dependency (a PortAudio
 binding)::
 
-    pip install "wave2aud[realtime]"
+    pip install "wav2aud[realtime]"
 
 Everything here degrades gracefully: :func:`available` reports whether output is
 possible, and the import is deferred so the rest of the package works without it.
 
 Example::
 
-    from wave2aud import live
-    from wave2aud.sources import SimulatedSource
+    from wav2aud import live
+    from wav2aud.sources import SimulatedSource
 
     live.stream(SimulatedSource("radar"), n_chunks=10)     # to the speakers
 
@@ -53,7 +53,7 @@ def _require_sounddevice():
     except Exception as exc:  # pragma: no cover - depends on the environment
         raise RuntimeError(
             "Live audio output needs the optional 'sounddevice' dependency.\n"
-            "Install it with:  pip install \"wave2aud[realtime]\"\n"
+            "Install it with:  pip install \"wav2aud[realtime]\"\n"
             "(sounddevice needs PortAudio; on Linux: apt install libportaudio2)"
         ) from exc
 
@@ -134,7 +134,7 @@ class LiveSonifier:
         return block
 
     def run(self, source, n_chunks: int | None = None) -> int:
-        """Pull chunks from a :class:`~wave2aud.sources.WaveSource` and play them.
+        """Pull chunks from a :class:`~wav2aud.sources.WaveSource` and play them.
 
         Returns the number of chunks played. Blocks until the source is
         exhausted or ``n_chunks`` have been played.

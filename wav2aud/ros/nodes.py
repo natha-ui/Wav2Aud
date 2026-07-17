@@ -19,9 +19,9 @@ Parameters: ``wave_type``, ``sample_rate``, ``carrier``, ``is_complex``,
 
 Run (on a machine with ROS2)::
 
-    ros2 run wave2aud sonifier --ros-args -p wave_type:=radar -p sample_rate:=8000.0
+    ros2 run wav2aud sonifier --ros-args -p wave_type:=radar -p sample_rate:=8000.0
     # or from python:
-    python -m wave2aud.ros.nodes sonifier
+    python -m wav2aud.ros.nodes sonifier
 """
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ from ..waves import WaveSample
 class WaveBridge:
     """ROS-independent core: bytes/arrays in -> audio + features out.
 
-    Backed by the stateful :class:`~wave2aud.realtime.RealtimeSonifier`, so
+    Backed by the stateful :class:`~wav2aud.realtime.RealtimeSonifier`, so
     successive blocks join seamlessly. Unit-testable without ROS2; the nodes
     below are thin wrappers over this.
     """
@@ -78,7 +78,7 @@ def make_sonifier_node():
 
     class SonifierNode(Node):
         def __init__(self):
-            super().__init__("wave2aud_sonifier")
+            super().__init__("wav2aud_sonifier")
             self.declare_parameter("wave_type", "radar")
             self.declare_parameter("sample_rate", 8000.0)
             self.declare_parameter("carrier", 0.0)
@@ -95,7 +95,7 @@ def make_sonifier_node():
             self.feat_pub = self.create_publisher(String, "~/features", 10)
             self.create_subscription(Float32MultiArray, "~/wave", self._on_wave, 10)
             self.create_subscription(String, "~/wave_meta", self._on_meta, 10)
-            self.get_logger().info(f"wave2aud sonifier up for {gp('wave_type').value}")
+            self.get_logger().info(f"wav2aud sonifier up for {gp('wave_type').value}")
 
         def _on_meta(self, msg):
             try:
@@ -123,7 +123,7 @@ def make_wave_publisher_node(wave_type: str = "radar", period: float = 1.5):
 
     class WavePublisher(Node):
         def __init__(self):
-            super().__init__("wave2aud_wave_publisher")
+            super().__init__("wav2aud_wave_publisher")
             self.src = SimulatedSource(wave_type)
             self.wave_pub = self.create_publisher(Float32MultiArray, "~/wave", 10)
             self.meta_pub = self.create_publisher(String, "~/wave_meta", 10)

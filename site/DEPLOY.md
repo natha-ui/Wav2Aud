@@ -1,4 +1,4 @@
-# Putting the wave2aud studio on the internet
+# Putting the Wav2Aud studio on the internet
 
 The whole site is a single self-contained file: **`site/index.html`** (~1.8 MB,
 audio embedded, no external requests). Everything — the sonification engine, the
@@ -28,7 +28,7 @@ folder automatically on every push to `main`.
 
 ```bash
 # from the project root
-git init && git add . && git commit -m "wave2aud studio"
+git init && git add . && git commit -m "Wav2Aud studio"
 git branch -M main
 git remote add origin https://github.com/<you>/<repo>.git
 git push -u origin main

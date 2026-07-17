@@ -1,8 +1,8 @@
-"""wave2aud -- biomimetic sonification of non-audio waves into semi-musical audio.
+"""wav2aud -- biomimetic sonification of non-audio waves into semi-musical audio.
 
 Quick start::
 
-    import wave2aud as w2a
+    import wav2aud as w2a
     sample = w2a.simulate.preset("radar_car")
     result = w2a.sonify(sample)
     result.write("radar_car.wav")

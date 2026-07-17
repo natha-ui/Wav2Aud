@@ -32,4 +32,4 @@ Thumbs.db
 
 # Generated artifacts (reproducible from the scripts)
 examples/output/
-docs/wave2aud_showcase.html
+docs/wav2aud_showcase.html

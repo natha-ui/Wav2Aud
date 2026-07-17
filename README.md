@@ -30,9 +30,9 @@ raw wave ─▶ physical coupling ─▶ cochlea + hair cells ─▶ perceptual 
 ## Install
 
 ```bash
-pip install wave2aud                # core: numpy + scipy only
-pip install "wave2aud[realtime]"    # + live audio output (sounddevice/PortAudio)
-pip install "wave2aud[all]"         # + matplotlib for figures
+pip install wav2aud                # core: numpy + scipy only
+pip install "wav2aud[realtime]"    # + live audio output (sounddevice/PortAudio)
+pip install "wav2aud[all]"         # + matplotlib for figures
 ```
 
 <details>
@@ -52,14 +52,14 @@ hair cells and oscillator phases continuous across blocks, so the audio is
 seamless:
 
 ```bash
-wave2aud live --type radar               # simulated sensor → speakers, Ctrl+C to stop
-wave2aud live --type seismic --natural   # hear the raw wave instead of the music
-wave2aud live --list-devices
+wav2aud live --type radar               # simulated sensor → speakers, Ctrl+C to stop
+wav2aud live --type seismic --natural   # hear the raw wave instead of the music
+wav2aud live --list-devices
 ```
 
 ```python
-from wave2aud import live
-from wave2aud.sources import CallbackSource
+from wav2aud import live
+from wav2aud.sources import CallbackSource
 
 # any driver that returns arrays plugs straight in
 src = CallbackSource("radar", lambda: sdr.read_samples(4096),
@@ -70,7 +70,7 @@ live.stream(src)                      # blocks, converting in real time
 Or drive the engine yourself and do what you like with the blocks:
 
 ```python
-from wave2aud import RealtimeSonifier
+from wav2aud import RealtimeSonifier
 engine = RealtimeSonifier()
 block = engine.process(chunk)         # → seamless (n, 2) stereo, phase-continuous
 ```
@@ -78,8 +78,8 @@ block = engine.process(chunk)         # → seamless (n, 2) stereo, phase-contin
 ## Two-minute demo
 
 ```python
-import wave2aud as w2a
-from wave2aud import simulate
+import wav2aud as w2a
+from wav2aud import simulate
 
 result = w2a.sonify(simulate.preset("gamma_cs137"))
 result.write("gamma.wav")            # the musical sonification
@@ -87,8 +87,8 @@ result.write_natural("gamma_raw.wav")  # the wave heard "naturally"
 ```
 
 ```bash
-wave2aud demo --out ./out --figures        # every category → WAV + pipeline figures
-wave2aud experience --type radar --input myclip.wav --out experience.html
+wav2aud demo --out ./out --figures        # every category → WAV + pipeline figures
+wav2aud experience --type radar --input myclip.wav --out experience.html
 ```
 
 ## Try it in your browser — no code
@@ -105,7 +105,7 @@ see [`site/DEPLOY.md`](site/DEPLOY.md) (Netlify, GitHub Pages, Cloudflare, …).
 ## Bring your own waveform 🌀
 
 ```python
-from wave2aud import ingest
+from wav2aud import ingest
 ingest.experience_from_wav("myclip.wav", "radar", "radar.html")
 ingest.experience_from_image("seismogram.png", "seismic", "quake.html")
 ```
@@ -161,7 +161,7 @@ seismic → audio → radio → infrared → radar → gamma → ultrasound
 ## Project layout
 
 ```
-wave2aud/        the Python package (pure NumPy/SciPy)
+wav2aud/        the Python package (pure NumPy/SciPy)
   transduction · cochlea · haircell · ear     the biomimetic ear
   features · mapping · synthesis              perception → music
   realtime · live · pipeline · sources · ros/ real-time, I/O, robotics

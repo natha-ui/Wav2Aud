@@ -1,4 +1,4 @@
-"""ROS2 integration for wave2aud.
+"""ROS2 integration for wav2aud.
 
 Import is safe even without ROS2 installed: the node classes are only defined
 when ``rclpy`` is importable. Use :func:`available` to check.

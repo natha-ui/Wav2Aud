@@ -1,7 +1,7 @@
 """Synthetic wave sources.
 
 Physically-plausible generators for every category so the package runs with no
-hardware. Each returns a :class:`~wave2aud.waves.WaveSample` carrying the native
+hardware. Each returns a :class:`~wav2aud.waves.WaveSample` carrying the native
 physics (true sample rate, carrier, side channels) exactly as a real sensor
 would. A library of named :data:`PRESETS` demonstrates the intended behaviour:
 *comparable* waves within a category (e.g. a car vs a truck on radar) map to

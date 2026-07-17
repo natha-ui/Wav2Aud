@@ -4,7 +4,7 @@
 # create or store. One-time setup on PyPI:
 #
 #   1. https://pypi.org/manage/account/publishing/  ->  "Add a new pending publisher"
-#        PyPI project name : wave2aud
+#        PyPI project name : wav2aud
 #        Owner             : natha-ui
 #        Repository name   : Wav2Aud
 #        Workflow name     : publish.yml
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/wave2aud
+      url: https://test.pypi.org/p/wav2aud
     permissions:
       id-token: write        # required for Trusted Publishing
     steps:
@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/wave2aud
+      url: https://pypi.org/p/wav2aud
     permissions:
       id-token: write        # required for Trusted Publishing
     steps:

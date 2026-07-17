@@ -9,7 +9,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from wave2aud import ingest
+from wav2aud import ingest
 
 
 @pytest.fixture

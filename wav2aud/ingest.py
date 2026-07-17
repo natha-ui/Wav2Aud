@@ -1,6 +1,6 @@
 """Bring your own waveform.
 
-Turn a user-supplied waveform into a :class:`~wave2aud.waves.WaveSample` and an
+Turn a user-supplied waveform into a :class:`~wav2aud.waves.WaveSample` and an
 interactive 3-D "experience" page that shows the wave with artistic flourish
 while playing its sonification. Two input modes:
 

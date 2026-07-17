@@ -1,10 +1,10 @@
 """A naive FFT sonifier -- the baseline the biomimetic ear is compared against.
 
-This is the "typical" approach wave2aud deliberately avoids: take the coupled
+This is the "typical" approach wav2aud deliberately avoids: take the coupled
 drive, STFT it, and turn the loudest spectral bins straight into sustained tones
 (octave-folded into an audible band). There is **no** cochlear model, no scale,
 no category identity -- so the output is inharmonic, category-agnostic and hard
-to read. :mod:`wave2aud.metrics` quantifies exactly how it loses interpretability
+to read. :mod:`wav2aud.metrics` quantifies exactly how it loses interpretability
 versus the ear.
 """
 from __future__ import annotations

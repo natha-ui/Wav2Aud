@@ -8,7 +8,7 @@ gamma, and a ground-velocity trace for seismic.
 Crucially, the sample carries the *native* physics (its true sample rate,
 carrier frequency and any side channels such as target range or arrival angle).
 The biomimetic ear never assumes the data is already audio -- the transduction
-front-end (:mod:`wave2aud.transduction`) is responsible for coupling each
+front-end (:mod:`wav2aud.transduction`) is responsible for coupling each
 physical modality into the ear's audio-rate mechanical drive.
 """
 from __future__ import annotations

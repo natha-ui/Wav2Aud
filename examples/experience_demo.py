@@ -13,7 +13,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
 
-from wave2aud import ingest
+from wav2aud import ingest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "output", "experiences")

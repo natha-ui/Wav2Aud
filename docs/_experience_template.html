@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>wave2aud — waveform experience</title>
+<title>Wav2Aud — waveform experience</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   :root {
@@ -77,7 +77,7 @@
     Its shape <em>is</em> the wave. The comet tracing it is the playhead; the audio is your
     wave run through the biomimetic ear, so what you hear is the sonification of exactly what
     you see.</p>
-  <p style="font-size:.85rem">Make your own: <code>from wave2aud import ingest</code> →
+  <p style="font-size:.85rem">Make your own: <code>from wav2aud import ingest</code> →
     <code>ingest.experience_from_wav("clip.wav", "radar", "out.html")</code> or
     <code>experience_from_image("plot.png", "seismic", "out.html")</code>.</p>
 </div>
@@ -118,7 +118,7 @@
   document.getElementById("chips").innerHTML = chips.map(c =>
     `<span class="chip">${c[0]} <b>${c[1]}</b></span>`).join("");
   document.getElementById("belowText").textContent =
-    `This is a ${EXP.wave_type} waveform. Through wave2aud it sounds like ` +
+    `This is a ${EXP.wave_type} waveform. Through Wav2Aud it sounds like ` +
     (DESC[EXP.wave_type] || "music") + ".";
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -11,7 +11,7 @@ Three groups:
    the wave's spectral evolution?).
 3. **Interpretability (ear vs FFT)** -- sensory roughness, musical-scale
    conformity and Wiener entropy for the biomimetic-ear output versus the naive
-   FFT baseline (:mod:`wave2aud.baseline`).
+   FFT baseline (:mod:`wav2aud.baseline`).
 """
 from __future__ import annotations
 

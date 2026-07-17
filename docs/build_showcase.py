@@ -3,7 +3,7 @@
 Generates the biomimetic-ear clips (one per category) and a few FFT-baseline
 clips for A/B listening, computes the real interpretability / monotonicity /
 separability statistics, and injects everything into
-``_showcase_template.html`` -> ``wave2aud_showcase.html``.
+``_showcase_template.html`` -> ``wav2aud_showcase.html``.
 """
 from __future__ import annotations
 
@@ -16,9 +16,9 @@ import wave
 import numpy as np
 from scipy.signal import resample_poly
 
-import wave2aud as w2a
-from wave2aud import simulate, metrics
-from wave2aud.baseline import fft_sonify
+import wav2aud as w2a
+from wav2aud import simulate, metrics
+from wav2aud.baseline import fft_sonify
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -147,7 +147,7 @@ def main():
                .replace("__AUDIO_FFT_JSON__", json.dumps(audio_fft))
                .replace("__STATS_JSON__", json.dumps(stats))
                .replace("__EXAMPLES_JSON__", json.dumps(examples)))
-    out = os.path.join(HERE, "wave2aud_showcase.html")
+    out = os.path.join(HERE, "wav2aud_showcase.html")
     with open(out, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"wrote {out}  ({len(html) / 1024:.0f} KB)")

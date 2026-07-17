@@ -1,4 +1,4 @@
-# wave2aud — Design, Sound Guide & Tutorial
+# Wav2Aud — Design, Sound Guide & Tutorial
 
 *A biomimetic ear that turns radar, radio, infrared, ultrasound, gamma and
 seismic waves directly into semi-musical audio.*
@@ -8,7 +8,7 @@ seismic waves directly into semi-musical audio.*
 ## 1. Philosophy
 
 Most sonification pipelines pre-process a signal (FFT, feature vector) and then
-map numbers onto notes. wave2aud deliberately does the opposite: it builds a
+map numbers onto notes. Wav2Aud deliberately does the opposite: it builds a
 **biomimetic ear** and *mechanically drives it* with each wave, letting the ear
 do the analysis — exactly as a real ear is driven by pressure and lets the
 cochlea and hair cells perform the frequency analysis.
@@ -142,7 +142,7 @@ rendered in `synthesis.py`:
 - **Anomaly / novelty detection.** Because comparable waves sound comparable, a
   sound that "doesn't belong" is immediately salient.
 
-> **Honesty note.** wave2aud is a *perceptual instrument*, not a calibrated
+> **Honesty note.** Wav2Aud is a *perceptual instrument*, not a calibrated
 > measurement tool. Use it to notice, compare and triage — then confirm with
 > quantitative analysis.
 
@@ -160,8 +160,8 @@ pip install -e ".[viz]"     # + matplotlib for figures
 ### One wave → one WAV
 
 ```python
-import wave2aud as w2a
-from wave2aud import simulate
+import wav2aud as w2a
+from wav2aud import simulate
 
 sample = simulate.preset("radar_car")     # or your own WaveSample
 result = w2a.sonify(sample)
@@ -175,7 +175,7 @@ print(result.params.register_lo_midi)      # how it was mapped
 
 ```python
 import numpy as np
-from wave2aud import WaveSample, Sonifier
+from wav2aud import WaveSample, Sonifier
 
 # e.g. a geophone trace at 250 Hz
 trace = np.load("quake.npy")
@@ -190,7 +190,7 @@ photon **energies** in `data` with `meta["event_times"]`.
 ### Pictures of the interpretation
 
 ```python
-from wave2aud import viz
+from wav2aud import viz
 viz.plot_pipeline(result, "pipeline.png")          # raw → drive → cochleagram → notes → audio
 viz.plot_feature_map([result, ...], "map.png")     # category separation
 ```
@@ -198,16 +198,16 @@ viz.plot_feature_map([result, ...], "map.png")     # category separation
 ### Command line
 
 ```bash
-wave2aud list
-wave2aud sonify --preset gamma_cs137 --out gamma.wav --figure gamma.png
-wave2aud demo --out ./out --figures        # every preset + figures
+wav2aud list
+wav2aud sonify --preset gamma_cs137 --out gamma.wav --figure gamma.png
+wav2aud demo --out ./out --figures        # every preset + figures
 ```
 
 ### Streaming (real-time-style)
 
 ```python
-from wave2aud import StreamingSonifier
-from wave2aud.sources import SimulatedSource
+from wav2aud import StreamingSonifier
+from wav2aud.sources import SimulatedSource
 
 stream = StreamingSonifier()               # cross-fades blocks
 src = SimulatedSource("ultrasound")
@@ -220,13 +220,13 @@ for _ in range(10):
 
 ## 7. Sensor & robotics integration
 
-### 7.1 Sensor abstraction (`wave2aud.sources`)
+### 7.1 Sensor abstraction (`wav2aud.sources`)
 
 Everything downstream depends only on `WaveSource`, so simulated sources, files,
 arrays and real drivers are interchangeable:
 
 ```python
-from wave2aud.sources import CallbackSource
+from wav2aud.sources import CallbackSource
 
 # wrap any driver that returns arrays (here: an RTL-SDR)
 src = CallbackSource("radar", lambda: sdr.read_samples(4096),
@@ -242,14 +242,14 @@ Suggested hardware per modality: RTL-SDR / HackRF (radio, radar Doppler),
 40 kHz transceiver or medical probe (ultrasound), MLX90640 / FLIR thermal
 (infrared), scintillator + MCA (gamma), geophone / MEMS accelerometer (seismic).
 
-### 7.2 ROS 2 (`wave2aud.ros`)
+### 7.2 ROS 2 (`wav2aud.ros`)
 
 Sonification becomes a robot **perception stream**. The nodes use only
 `std_msgs`, so no custom message build is required.
 
 ```mermaid
 flowchart LR
-    S[sensor driver node] -->|~/wave Float32MultiArray| N[wave2aud_sonifier]
+    S[sensor driver node] -->|~/wave Float32MultiArray| N[wav2aud_sonifier]
     S -->|~/wave_meta String JSON| N
     N -->|~/audio Float32MultiArray| P[audio playback / recorder]
     N -->|~/features String JSON| B[behaviour / navigation node]
@@ -263,11 +263,11 @@ flowchart LR
   turn toward a bright, fast-onset gamma hotspot).
 
 ```bash
-ros2 run wave2aud sonifier --ros-args -p wave_type:=ultrasound -p sample_rate:=400000.0
-ros2 run wave2aud publisher   # demo: streams simulated waves
+ros2 run wav2aud sonifier --ros-args -p wave_type:=ultrasound -p sample_rate:=400000.0
+ros2 run wav2aud publisher   # demo: streams simulated waves
 ```
 
-The ROS-independent core is `wave2aud.ros.WaveBridge`, which is unit-tested
+The ROS-independent core is `wav2aud.ros.WaveBridge`, which is unit-tested
 without ROS installed — so CI and desktop use need no `rclpy`.
 
 ---
@@ -284,7 +284,7 @@ without ROS installed — so CI and desktop use need no `rclpy`.
 
 ## 9. The real-time engine
 
-The offline pipeline renders a whole clip at once. `wave2aud.realtime`
+The offline pipeline renders a whole clip at once. `wav2aud.realtime`
 (`RealtimeSonifier`) is a **stateful streaming engine** that keeps every DSP
 stage's state across blocks, so successive blocks join with no cross-fade
 crutch:
@@ -299,8 +299,8 @@ crutch:
   (seismic, infrared) also joins continuously; those use a larger minimum block.
 
 ```python
-from wave2aud import RealtimeSonifier, chunk_sample
-from wave2aud import simulate
+from wav2aud import RealtimeSonifier, chunk_sample
+from wav2aud import simulate
 
 rt = RealtimeSonifier()                       # category fixed by the first block
 audio = rt.render_sample(simulate.preset("radar_car"))   # seamless, phase-continuous
@@ -311,19 +311,19 @@ High-rate continuous streams (radar, radio, ultrasound) are seamless block-to-
 block; gamma is processed as one block (it is event-based, not a stream). The
 ROS 2 `WaveBridge` uses this engine, so a robot's live feed sonifies continuously.
 
-**Live output.** `wave2aud.live` turns the engine into an actual instrument:
+**Live output.** `wav2aud.live` turns the engine into an actual instrument:
 chunks are pulled from any `WaveSource`, sonified and written to an audio
 device. Output needs the optional `sounddevice` extra
-(`pip install "wave2aud[realtime]"`); `live.available()` reports whether it is
+(`pip install "wav2aud[realtime]"`); `live.available()` reports whether it is
 usable and the import is deferred, so the package works fine without it.
 
 ```bash
-wave2aud live --type radar               # sensor -> speakers (Ctrl+C to stop)
-wave2aud live --type seismic --natural   # the raw wave instead of the music
+wav2aud live --type radar               # sensor -> speakers (Ctrl+C to stop)
+wav2aud live --type seismic --natural   # the raw wave instead of the music
 ```
 
 ```python
-from wave2aud import live
+from wav2aud import live
 live.stream(CallbackSource("radar", sdr.read_samples, sample_rate=2.4e6))
 ```
 
@@ -332,9 +332,9 @@ than the sonification — the same natural/musical choice the web studio offers.
 
 ## 10. Interpretability: biomimetic ear vs FFT
 
-The naive baseline (`wave2aud.baseline.fft_sonify`) does the "typical" thing —
+The naive baseline (`wav2aud.baseline.fft_sonify`) does the "typical" thing —
 STFT the drive and turn the loudest bins into tones. Compared head-to-head
-(`wave2aud.metrics.interpretability`), the ear's output is measurably easier to
+(`wav2aud.metrics.interpretability`), the ear's output is measurably easier to
 read:
 
 | Property | Biomimetic ear | FFT baseline |
@@ -352,7 +352,7 @@ into a scale-locked, category-branded, onset-articulated line. See
 
 ## 11. Quantitative wave ↔ audio comparison
 
-So the sound can be compared *directly* to the wave, `wave2aud.metrics.compare`
+So the sound can be compared *directly* to the wave, `wav2aud.metrics.compare`
 reports paired descriptors (spectral centroid, bandwidth, Wiener entropy, crest
 factor, modulation rate) on both the coupled wave drive and the audio, plus
 **preservation scores**:
@@ -373,7 +373,7 @@ physical parameter back off the sound. See `plot_wave_audio_comparison`.
 
 ## 12. Geometric interpretation (birdsong-style)
 
-Birdsong is often read geometrically. `wave2aud.geometry` applies the same two
+Birdsong is often read geometrically. `wav2aud.geometry` applies the same two
 lenses to *both* the wave drive and the audio so their shapes can be compared:
 
 - **Delay-embedding attractor** (Takens) — the phase portrait `x(t)` vs
@@ -387,7 +387,7 @@ See `plot_geometry`.
 
 ## 13. Bring your own waveform (the 3-D experience)
 
-`wave2aud.ingest` lets anyone drop in their own wave and get an artistic,
+`wav2aud.ingest` lets anyone drop in their own wave and get an artistic,
 interactive result. Two input modes — you just declare which of the six
 categories it is:
 
@@ -406,13 +406,13 @@ categories it is:
 - **plays the sonification** of that exact wave, so you see and hear the same thing.
 
 ```python
-from wave2aud import ingest
+from wav2aud import ingest
 ingest.experience_from_wav("myclip.wav", "radar", "radar_experience.html")
 ingest.experience_from_image("seismogram.png", "seismic", "quake_experience.html")
 ```
 
 ```bash
-wave2aud experience --type ultrasound --input clip.wav --out experience.html
+wav2aud experience --type ultrasound --input clip.wav --out experience.html
 ```
 
 (Gamma is event-based, so an ingested trace is peak-picked into photon events.)

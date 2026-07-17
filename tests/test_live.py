@@ -6,8 +6,8 @@ These never open an audio device, so they run headless in CI whether or not
 import numpy as np
 import pytest
 
-from wave2aud import live, simulate
-from wave2aud.sources import SimulatedSource
+from wav2aud import live, simulate
+from wav2aud.sources import SimulatedSource
 
 
 def test_available_reports_a_bool():

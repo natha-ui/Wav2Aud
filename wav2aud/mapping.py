@@ -9,7 +9,7 @@ The mapping has two layers:
    bowed drone -- the *category fingerprint*.
 
 2. **Within-category modulation (continuous).** The extracted
-   :class:`~wave2aud.features.WaveFeatures` move parameters *within* the
+   :class:`~wav2aud.features.WaveFeatures` move parameters *within* the
    category's envelope. Because the mapping is deterministic and continuous,
    two similar waves land on nearly identical parameters (small audible
    difference) while very different waves spread far apart (large audible

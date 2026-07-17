@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import os
 
-import wave2aud as w2a
-from wave2aud import simulate, viz
+import wav2aud as w2a
+from wav2aud import simulate, viz
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 AUDIO = os.path.join(HERE, "output", "audio")

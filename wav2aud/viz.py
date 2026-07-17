@@ -36,7 +36,7 @@ def plot_pipeline(result: SonifyResult, path: str | None = None, show_note_names
     color = CATEGORY_COLORS.get(r.sample.wave_type, "#888")
     fig, axes = plt.subplots(3, 2, figsize=(13, 10))
     fig.suptitle(
-        f"wave2aud  |  {r.sample.wave_type.upper()}  |  {r.sample.label()}",
+        f"wav2aud  |  {r.sample.wave_type.upper()}  |  {r.sample.label()}",
         fontsize=14, fontweight="bold",
     )
 

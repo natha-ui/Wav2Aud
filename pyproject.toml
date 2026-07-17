@@ -3,7 +3,7 @@ requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "wave2aud"
+name = "Wav2Aud"
 version = "0.1.0"
 description = "Biomimetic real-time sonification of radar, radio, infrared, ultrasound, gamma, seismic and audio waves into semi-musical sound."
 readme = "README.md"
@@ -11,7 +11,7 @@ requires-python = ">=3.9"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-    { name = "the wave2aud authors" },
+    { name = "the Wav2Aud authors" },
 ]
 keywords = [
     "sonification", "biomimetic", "cochlea", "auditory-model", "real-time",
@@ -55,10 +55,10 @@ Documentation = "https://github.com/natha-ui/Wav2Aud/blob/main/docs/DESIGN.md"
 Issues = "https://github.com/natha-ui/Wav2Aud/issues"
 
 [project.scripts]
-wave2aud = "wave2aud.cli:main"
+wav2aud = "wav2aud.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["wave2aud*"]
+include = ["wav2aud*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

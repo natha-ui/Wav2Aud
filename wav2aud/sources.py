@@ -1,7 +1,7 @@
 """Sensor abstraction layer.
 
 A :class:`WaveSource` is a hardware-agnostic producer of
-:class:`~wave2aud.waves.WaveSample` chunks. The rest of the package depends only
+:class:`~wav2aud.waves.WaveSample` chunks. The rest of the package depends only
 on this interface, so a simulated source, a file, a NumPy array, or a real
 driver (RTL-SDR, geophone DAQ, ultrasonic ranger, gamma spectrometer, thermal
 camera) are all interchangeable. Concrete hardware drivers implement
@@ -59,7 +59,7 @@ class ArraySource(WaveSource):
 
 
 class SimulatedSource(WaveSource):
-    """A source backed by :mod:`wave2aud.simulate` (great for demos/CI/robots)."""
+    """A source backed by :mod:`wav2aud.simulate` (great for demos/CI/robots)."""
 
     def __init__(self, wave_type: str, n_chunks: Optional[int] = None, **kwargs):
         self.wave_type = wave_type

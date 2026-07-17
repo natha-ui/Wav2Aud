@@ -1,11 +1,11 @@
-"""End-to-end tests for the wave2aud pipeline."""
+"""End-to-end tests for the wav2aud pipeline."""
 import numpy as np
 import pytest
 
-import wave2aud as w2a
-from wave2aud import simulate
-from wave2aud.waves import WAVE_TYPES
-from wave2aud.ros import WaveBridge
+import wav2aud as w2a
+from wav2aud import simulate
+from wav2aud.waves import WAVE_TYPES
+from wav2aud.ros import WaveBridge
 
 
 ONE_PER_TYPE = {

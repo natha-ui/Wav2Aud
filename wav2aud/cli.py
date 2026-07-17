@@ -1,4 +1,4 @@
-"""Command-line interface for wave2aud."""
+"""Command-line interface for wav2aud."""
 from __future__ import annotations
 
 import argparse
@@ -47,7 +47,7 @@ def _cmd_live(args):
         return
     if not live.available():
         raise SystemExit(
-            'live audio needs the optional dependency: pip install "wave2aud[realtime]"'
+            'live audio needs the optional dependency: pip install "wav2aud[realtime]"'
         )
     source = SimulatedSource(args.type)
     mode = "natural" if args.natural else "musical"
@@ -89,7 +89,7 @@ def _cmd_demo(args):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog="wave2aud", description=__doc__)
+    parser = argparse.ArgumentParser(prog="wav2aud", description=__doc__)
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p = sub.add_parser("list", help="list wave types and presets")
@@ -97,7 +97,7 @@ def main(argv=None):
 
     p = sub.add_parser("sonify", help="sonify one wave to a WAV file")
     p.add_argument("--type", choices=["radar", "radio", "infrared", "ultrasound", "gamma", "seismic"])
-    p.add_argument("--preset", help="named preset (see `wave2aud list`)")
+    p.add_argument("--preset", help="named preset (see `wav2aud list`)")
     p.add_argument("--out", help="output .wav path")
     p.add_argument("--figure", help="also write a pipeline figure to this path")
     p.add_argument("--fs", type=float, default=44100.0)
@@ -124,7 +124,7 @@ def main(argv=None):
     p.set_defaults(func=_cmd_experience)
 
     p = sub.add_parser("demo", help="sonify every preset (and optionally figures)")
-    p.add_argument("--out", default="wave2aud_out", help="output directory")
+    p.add_argument("--out", default="wav2aud_out", help="output directory")
     p.add_argument("--figures", action="store_true", help="also render pipeline figures")
     p.add_argument("--fs", type=float, default=44100.0)
     p.set_defaults(func=_cmd_demo)

@@ -6,7 +6,7 @@ energy onto its nearest scale note, so the output is always in-scale and never
 muddier than the ~10-20 notes of the bank. Each note is one oscillator with a
 category partial recipe; summing them turns the wave's spectral evolution into
 melody and harmony. Because the note bank is fixed and each note keeps its own
-phase, the very same model drives the real-time engine (:mod:`wave2aud.realtime`).
+phase, the very same model drives the real-time engine (:mod:`wav2aud.realtime`).
 
 Implements every requested dimension: pitch, loudness, timbre, harmony, rhythm,
 tempo, duration, stereo, 3-D spatialisation, reverb, vibrato, tremolo, envelope,

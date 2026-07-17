@@ -2,10 +2,10 @@
 import numpy as np
 import pytest
 
-import wave2aud as w2a
-from wave2aud import simulate, metrics, geometry
-from wave2aud.realtime import RealtimeSonifier, chunk_sample
-from wave2aud.baseline import fft_sonify
+import wav2aud as w2a
+from wav2aud import simulate, metrics, geometry
+from wav2aud.realtime import RealtimeSonifier, chunk_sample
+from wav2aud.baseline import fft_sonify
 
 
 CONTINUOUS = ["seismic_M3_near", "radar_car", "radio_fm_music", "ir_body", "us_mid_double"]
