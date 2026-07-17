@@ -1,6 +1,6 @@
-# wave2aud 🌊👂🎵
+# Vav2Aud 🌊👂🎵
 
-**Biomimetic sonification of waves.** wave2aud builds a model ear — inspired by
+**Biomimetic sonification of waves.** Wav2Aud builds a model ear — inspired by
 the human cochlea, the bat's acoustic fovea and the insect antenna — and
 *mechanically drives it* with radar, radio, infrared, ultrasound, gamma, seismic
 and ordinary audio waves, turning each directly into **semi-musical** stereo
