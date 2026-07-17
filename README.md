@@ -143,5 +143,7 @@ geometry and robotics integration: [`docs/DESIGN.md`](docs/DESIGN.md).
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE). A (fictional) collaboration of biophysicists,
-engineers, mathematicians and biologists.
+MIT — see [`LICENSE`](LICENSE). 
+
+## Authors
+Claude code's Imaginary Science Team
