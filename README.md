@@ -146,4 +146,4 @@ geometry and robotics integration: [`docs/DESIGN.md`](docs/DESIGN.md).
 MIT — see [`LICENSE`](LICENSE). 
 
 ## Authors
-Claude code's Imaginary Science Team
+Claude Code's Imaginary Science Team
