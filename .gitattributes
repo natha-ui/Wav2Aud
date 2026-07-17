@@ -1,0 +1,9 @@
+# Normalise line endings to LF in the repository for all text files
+* text=auto eol=lf
+
+# Treat these as binary (never touch line endings / never diff as text)
+*.png binary
+*.wav binary
+*.jpg binary
+*.jpeg binary
+*.gif binary

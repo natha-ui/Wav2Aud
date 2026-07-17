@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wave2aud"
+version = "0.1.0"
+description = "Biomimetic sonification of radar, radio, infrared, ultrasound, gamma and seismic waves into semi-musical audio."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "The Wave2Aud collective (biophysics, engineering, mathematics, biology)" },
+]
+keywords = ["sonification", "biomimetic", "cochlea", "auditory-model", "radar", "seismic", "ultrasound", "gamma", "audio", "robotics", "ros2"]
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.7",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib>=3.4"]
+dev = ["pytest>=7.0", "matplotlib>=3.4"]
+
+[project.scripts]
+wave2aud = "wave2aud.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["wave2aud*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / packaging
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+*.egg
+
+# Test / type-check caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Editor / OS cruft
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Claude Code local config
+.claude/
+
+# Generated artifacts (reproducible from the scripts)
+examples/output/
+docs/wave2aud_showcase.html
