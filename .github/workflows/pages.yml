@@ -1,0 +1,43 @@
+# Publish the self-contained web studio (site/) to GitHub Pages.
+#
+# GitHub's "Deploy from a branch" option can only serve the repository root or
+# a /docs folder, so we deploy the site/ folder with the official Pages actions
+# instead. In the repository: Settings -> Pages -> Source: "GitHub Actions".
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # allows deploying manually from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once; let a newer push supersede an older one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the site/ folder as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -6,6 +6,7 @@ the human cochlea, the bat's acoustic fovea and the insect antenna — and
 and ordinary audio waves, turning each directly into **semi-musical** stereo
 sound.
 
+[![tests](https://github.com/natha-ui/Wav2Aud/actions/workflows/tests.yml/badge.svg)](https://github.com/natha-ui/Wav2Aud/actions/workflows/tests.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)
 ![Dependencies: numpy · scipy](https://img.shields.io/badge/deps-numpy%20%C2%B7%20scipy-blue.svg)

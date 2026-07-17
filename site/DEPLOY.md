@@ -12,13 +12,19 @@ audio embedded, no external requests). Everything — the sonification engine, t
    (Free Netlify account lets you rename it and add a custom domain.)
 
 ## Option B — GitHub Pages (best if you want version control, free)
-1. Create a GitHub repo and push this project (the file to serve is
-   `site/index.html`).
-2. Repo → **Settings → Pages** → *Build and deployment* → Source: **Deploy from a
-   branch** → Branch: `main`, Folder: **/site** (or move `index.html` to the repo
-   root and pick `/root`).
-3. Save. In ~1 minute it's live at
+This repo ships `.github/workflows/pages.yml`, which publishes the `site/`
+folder automatically on every push to `main`.
+
+1. Push the repo to GitHub.
+2. Repo → **Settings → Pages** → *Build and deployment* → Source:
+   **GitHub Actions**.
+3. That's it — each push redeploys. It's live at
    `https://<your-username>.github.io/<repo>/`.
+
+> Note: the "Deploy from a branch" option can only serve the repository **root**
+> or a **/docs** folder — it cannot serve `/site`. That's why we use the Actions
+> workflow. (If you'd rather not use Actions, copy `site/index.html` to the repo
+> root and choose *Deploy from a branch → main → / (root)*.)
 
 ```bash
 # from the project root
@@ -26,7 +32,7 @@ git init && git add . && git commit -m "wave2aud studio"
 git branch -M main
 git remote add origin https://github.com/<you>/<repo>.git
 git push -u origin main
-# then enable Pages in the repo settings (serve /site)
+# then set Settings -> Pages -> Source: GitHub Actions
 ```
 
 ## Option C — Cloudflare Pages / Vercel (free, fast CDN)
